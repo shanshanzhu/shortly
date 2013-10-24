@@ -60,7 +60,22 @@ get '/' do
 end
 
 get '/links' do
-    links = Link.order("created_at DESC")
+    links = Link.order("visits DESC")
+    links.map { |link|
+        link.as_json.merge(base_url: request.base_url)
+    }.to_json
+end
+
+get '/links/recent' do
+#sort links by click
+    links = Link.order("updated_at DESC")
+    links.map { |link|
+        link.as_json.merge(base_url: request.base_url)
+    }.to_json
+end
+
+get '/links/total' do
+    links = Link.order("visits DESC")
     links.map { |link|
         link.as_json.merge(base_url: request.base_url)
     }.to_json

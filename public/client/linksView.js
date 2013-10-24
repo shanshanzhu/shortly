@@ -1,4 +1,7 @@
 Shortly.LinksView = Backbone.View.extend({
+  // defaults: {
+  //   filter: false
+  // },
 
   className: 'links',
 
@@ -13,8 +16,17 @@ Shortly.LinksView = Backbone.View.extend({
   },
 
   addAll: function(){
+    //empty
     this.collection.forEach(this.addOne, this);
   },
+
+
+  filter: function(term){
+
+    this.$el.empty();
+    this.collection.where({url:term}).forEach(this.addOne, this);
+  },
+
 
   addOne: function(item){
     var view = new Shortly.LinkView( {model: item} );
@@ -22,3 +34,4 @@ Shortly.LinksView = Backbone.View.extend({
   }
 
 });
+
